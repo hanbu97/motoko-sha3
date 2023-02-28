@@ -1,4 +1,4 @@
 { 
-    dependencies = [ "base" ],
-    compiler = Some "0.6.18" 
+    dependencies = [ "base", "iterext" ],
+    compiler = Some "0.8.3" 
 }
