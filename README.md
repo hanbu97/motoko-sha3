@@ -40,5 +40,5 @@ Debug.print(hex);
 
 ## Ref
 - Sha3 and Keccak implemention is inspired by https://github.com/mjosaarinen/tiny_sha3
-- hex encode is from https://emn178.github.io/online-tools/sha3_512.html
+- hex encode is from https://github.com/aviate-labs/encoding.mo
 
