@@ -29,9 +29,12 @@ let result = sha.finalize();
 - hash "hello world!" using keccak-512
 ```
 var sha = SHA3.Keccak(512);
-sha.update([104 : Nat8, 101, 108, 108, 111]);
-sha.update([32 : Nat8]);
-sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+let hello = Blob.toArray(Text.encodeUtf8("hello"));
+let space = Blob.toArray(Text.encodeUtf8(" "));
+let world = Blob.toArray(Text.encodeUtf8("world!"));
+sha.update(hello);
+sha.update(space);
+sha.update(world);
 let result = sha.finalize();
 let hex = Hex.encode(result);
 Debug.print(hex);

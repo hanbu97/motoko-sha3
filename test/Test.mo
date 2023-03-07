@@ -80,7 +80,8 @@ Debug.print("--- hello ---");
 // sha3-224
 do {
     var sha = SHA3.Sha3(224);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -89,7 +90,8 @@ do {
 // sha3-256
 do {
     var sha = SHA3.Sha3(256);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -98,7 +100,8 @@ do {
 // sha3-384
 do {
     var sha = SHA3.Sha3(384);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -107,7 +110,8 @@ do {
 // sha3-512
 do {
     var sha = SHA3.Sha3(512);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -116,7 +120,8 @@ do {
 // keccak-224
 do {
     var sha = SHA3.Keccak(224);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -125,7 +130,8 @@ do {
 // keccak-256
 do {
     var sha = SHA3.Keccak(256);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -134,7 +140,8 @@ do {
 // keccak-384
 do {
     var sha = SHA3.Keccak(384);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -143,7 +150,8 @@ do {
 // keccak-512
 do {
     var sha = SHA3.Keccak(512);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
+    let val = Blob.toArray(Text.encodeUtf8("hello"));
+    sha.update(val);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -155,9 +163,12 @@ Debug.print("--- hello world! ---");
 // sha3-224
 do {
     var sha = SHA3.Sha3(224);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -166,9 +177,12 @@ do {
 // sha3-256
 do {
     var sha = SHA3.Sha3(256);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -177,9 +191,12 @@ do {
 // sha3-384
 do {
     var sha = SHA3.Sha3(384);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -188,9 +205,12 @@ do {
 // sha3-512
 do {
     var sha = SHA3.Sha3(512);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -199,9 +219,12 @@ do {
 // keccak-224
 do {
     var sha = SHA3.Keccak(224);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -210,9 +233,12 @@ do {
 // keccak-256
 do {
     var sha = SHA3.Keccak(256);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -221,9 +247,12 @@ do {
 // keccak-384
 do {
     var sha = SHA3.Keccak(384);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
@@ -232,9 +261,12 @@ do {
 // keccak-512
 do {
     var sha = SHA3.Keccak(512);
-    sha.update([104 : Nat8, 101, 108, 108, 111]);
-    sha.update([32 : Nat8]);
-    sha.update([119 : Nat8, 111, 114, 108, 100, 33]);
+    let hello = Blob.toArray(Text.encodeUtf8("hello"));
+    let space = Blob.toArray(Text.encodeUtf8(" "));
+    let world = Blob.toArray(Text.encodeUtf8("world!"));
+    sha.update(hello);
+    sha.update(space);
+    sha.update(world);
     let result = sha.finalize();
     let hex = Hex.encode(result);
     Debug.print(hex);
