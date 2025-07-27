@@ -1,5 +1,4 @@
 import SHA3 "../src";
-import Array "mo:core/Array";
 import Blob "mo:core/Blob";
 import Debug "mo:core/Debug";
 import Hex "hex";
