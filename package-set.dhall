@@ -1,5 +1,5 @@
 let upstream =
-      https://github.com/dfinity/vessel-package-set/releases/download/mo-0.8.3-20230224/package-set.dhall
+      https://github.com/dfinity/vessel-package-set/releases/download/mo-0.15.0-20250726/package-set.dhall
 
 let Package =
     { name : Text, version : Text, repo : Text, dependencies : List Text }
@@ -7,12 +7,12 @@ let Package =
 let
   -- This is where you can add your own packages to the package-set
   additions = [
-       { name = "iterext"
-        , version = "v2.0.0"
-        , repo = "https://github.com/timohanke/motoko-iterext.git"
-        , dependencies = [ "base" ] : List Text
+       { name = "core"
+        , version = "preview-0.6.0"
+        , repo = "https://github.com/dfinity/motoko-core"
+        , dependencies = [] : List Text
         }
-    ]
+    ] : List Package
 
 let
   -- This is where you can override existing packages in the package-set

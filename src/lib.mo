@@ -1,8 +1,9 @@
-import Array "mo:base/Array";
-import Iter "mo:base/Iter";
-import Nat64 "mo:base/Nat64";
-import Nat8 "mo:base/Nat8";
-import Buffer "mo:base/Buffer";
+import VarArray "mo:core/VarArray";
+import Iter "mo:core/Iter";
+import Nat64 "mo:core/Nat64";
+import Nat8 "mo:core/Nat8";
+import Nat "mo:core/Nat";
+import Array "mo:core/Array";
 
 module Sha3 {
     private let SHA3_WORDS = 25;
@@ -37,17 +38,16 @@ module Sha3 {
     private let KECCAKF_PILN : [Nat] = [10, 7, 11, 17, 18, 3, 5, 16, 8, 21, 24, 4, 15, 23, 19, 13, 12, 2, 20, 14, 22, 9, 6, 1];
     private func rotl64(x : Nat64, y : Nat64) : Nat64 = (x << y) | (x >> (64 - y));
     public func keccakf(st : [var Nat64]) : () {
-        var bc = Array.init<Nat64>(5, 0);
-        var count : Nat64 = 0;
-        for (r in Iter.range(0, KECCAKF_ROUNDS -1)) {
+        var bc = VarArray.repeat<Nat64>(0, 5);
+        for (r in Nat.range(0, KECCAKF_ROUNDS)) {
             // Theta
-            for (i in Iter.range(0, 4)) {
-                bc[i] := st[i] ^ st[i +5] ^ st[i +10] ^ st[i +15] ^ st[i +20];
+            for (i in Nat.range(0, 5)) {
+                bc[i] := st[i] ^ st[i + 5] ^ st[i + 10] ^ st[i + 15] ^ st[i + 20];
             };
 
-            for (i in Iter.range(0, 4)) {
+            for (i in Nat.range(0, 5)) {
                 let t = bc[(i + 4) % 5] ^ rotl64(bc[(i + 1) % 5], 1);
-                for (tj in Iter.range(i / 5, 4)) {
+                for (tj in Nat.range(i / 5, 5)) {
                     let j = tj * 5 + i;
                     st[j] ^= t;
                 };
@@ -55,7 +55,7 @@ module Sha3 {
 
             // Rho Pi
             var t = st[1];
-            for (i in Iter.range(0, 23)) {
+            for (i in Nat.range(0, 24)) {
                 let j = KECCAKF_PILN[i];
                 bc[0] := st[j];
                 st[j] := rotl64(t, KECCAKF_ROTC[i]);
@@ -63,12 +63,12 @@ module Sha3 {
             };
 
             // Chi
-            for (tj in Iter.range(0, 4)) {
+            for (tj in Nat.range(0, 5)) {
                 let j = tj * 5;
-                for (i in Iter.range(0, 4)) {
+                for (i in Nat.range(0, 5)) {
                     bc[i] := st[j + i];
                 };
-                for (i in Iter.range(0, 4)) {
+                for (i in Nat.range(0, 5)) {
                     st[j + i] ^= (Nat64.bitnot(bc[(i + 1) % 5])) & bc[(i + 2) % 5];
                 };
             };
@@ -92,17 +92,17 @@ module Sha3 {
     };
 
     public func to_nat8(data : [var Nat64]) : [Nat8] {
-        let dat = Array.freeze(data);
+        let dat = Array.fromVarArray(data);
         let data_len = Array.size(dat);
-        var buf = Array.init<Nat8>(8 * data_len, 0);
+        var buf = VarArray.repeat<Nat8>(0, 8 * data_len);
 
-        for (d in Iter.range(0, data_len -1)) {
+        for (d in Nat.range(0, data_len)) {
             let u8 = toNat8Array(data[d]);
-            for (i in Iter.range(0, 7)) {
+            for (i in Nat.range(0, 8)) {
                 buf[d * 8 + i] := u8[i];
             };
         };
-        return Array.freeze(buf);
+        return Array.fromVarArray(buf);
     };
 
     public func get_nat8(data : [var Nat64], idx : Nat) : Nat8 {
@@ -123,7 +123,7 @@ module Sha3 {
     };
 
     private class Context(bit : Nat, delim : Nat8) = {
-        private var st : [var Nat64] = Array.init<Nat64>(SHA3_WORDS, 0);
+        private var st : [var Nat64] = VarArray.repeat<Nat64>(0, SHA3_WORDS);
         private let mdlen : Nat = bit / 8;
         private var rsiz : Nat = 200 - bit / 4;
         private var pt : Nat = 0;
@@ -148,18 +148,18 @@ module Sha3 {
             u8 ^= delim;
             set_nat8(st, pt, u8);
 
-            u8 := get_nat8(st, rsiz -1);
+            u8 := get_nat8(st, rsiz - 1);
             u8 ^= 0x80;
-            set_nat8(st, rsiz -1, u8);
+            set_nat8(st, rsiz - 1, u8);
 
             keccakf(st);
-            var md : [var Nat8] = Array.init<Nat8>(mdlen, 0);
+            var md : [var Nat8] = VarArray.repeat<Nat8>(0, mdlen);
 
-            for (i in Iter.range(0, mdlen -1)) {
+            for (i in Nat.range(0, mdlen)) {
                 md[i] := get_nat8(st, i);
             };
 
-            return Array.freeze(md);
+            return Array.fromVarArray(md);
         };
     };
 

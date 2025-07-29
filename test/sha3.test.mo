@@ -1,9 +1,8 @@
 import SHA3 "../src";
-import Array "mo:base/Array";
-import Blob "mo:base/Blob";
-import Debug "mo:base/Debug";
+import Blob "mo:core/Blob";
+import Debug "mo:core/Debug";
 import Hex "hex";
-import Text "mo:base/Text";
+import Text "mo:core/Text";
 
 // Results from
 // https://emn178.github.io/online-tools/sha3_512.html
