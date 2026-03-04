@@ -1,12 +1,14 @@
 // https://github.com/aviate-labs/encoding.mo
-import Array "mo:base/Array";
-import Blob "mo:base/Blob";
-import Char "mo:base/Char";
-import Hash "mo:base/Hash";
-import Iter "mo:base/Iter";
-import Nat8 "mo:base/Nat8";
-import Result "mo:base/Result";
-import Text "mo:base/Text";
+import Array "mo:core/Array";
+import Blob "mo:core/Blob";
+import Char "mo:core/Char";
+import Types "mo:core/Types";
+import Iter "mo:core/Iter";
+import Nat "mo:core/Nat";
+import Nat8 "mo:core/Nat8";
+import Result "mo:core/Result";
+import Text "mo:core/Text";
+import VarArray "mo:core/VarArray";
 
 module HEX {
   private let base : Nat8 = 16;
@@ -53,7 +55,7 @@ module HEX {
 
   // Hashes the given hex text.
   // NOTE: assumes the text is valid hex: [0-9a-fA-F].
-  public func hash(h : Hex) : Hash.Hash {
+  public func hash(h : Hex) : Types.Hash {
     switch (decode(h)) {
       case (#err(_)) { assert (false); 0 };
       case (#ok(r)) { Blob.hash(Blob.fromArray(r)) };
@@ -107,13 +109,13 @@ module HEX {
   public func decode(t : Hex) : Result.Result<[Nat8], Text> {
     let t_ = if (t.size() % 2 == 0) { t } else { "0" # t };
     let cs = Iter.toArray(t_.chars());
-    let ns = Array.init<Nat8>(t_.size() / 2, 0);
-    for (i in Iter.range(0, ns.size() - 1)) {
+    let ns = VarArray.repeat<Nat8>(0, t_.size() / 2);
+    for (i in Nat.range(0, ns.size())) {
       let j : Nat = i * 2;
       switch (decodeChar(cs[j])) {
         case (#err(e)) { return #err(e) };
         case (#ok(x0)) {
-          switch (decodeChar(cs[j +1])) {
+          switch (decodeChar(cs[j + 1])) {
             case (#err(e)) { return #err(e) };
             case (#ok(x1)) {
               ns[i] := x0 * base + x1;
@@ -122,6 +124,6 @@ module HEX {
         };
       };
     };
-    #ok(Array.freeze(ns));
+    #ok(Array.fromVarArray(ns));
   };
 };
